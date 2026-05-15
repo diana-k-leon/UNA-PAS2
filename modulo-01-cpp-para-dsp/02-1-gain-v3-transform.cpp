@@ -8,7 +8,7 @@
 // aplica una operación a cada elemento de un contenedor.
 //
 // Es más "declarativo" — no escribís el loop, solo describes
-// qué quieres: "transforma cada sample multiplicándolo por gain"
+// qué querés: "transforma cada sample multiplicándolo por gain"
 //
 // Nota: requiere entender lambdas [gain](float s) { return s * gain; }
 // Por ahora es solo para ver que existen otras formas elegantes.
