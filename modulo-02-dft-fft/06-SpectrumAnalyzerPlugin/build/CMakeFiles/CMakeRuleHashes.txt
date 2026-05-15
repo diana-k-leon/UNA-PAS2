@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+63d6e0942ae8b5313a593e5dd71bc922 SpectrumAnalyzer_artefacts/JuceLibraryCode/JuceHeader.h
+f0f07cfbe08078a920ab354ea95fda97 SpectrumAnalyzer_artefacts/JuceLibraryCode/SpectrumAnalyzer_VST3/PkgInfo

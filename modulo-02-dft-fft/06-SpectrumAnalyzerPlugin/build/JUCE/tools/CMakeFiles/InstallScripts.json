@@ -1,0 +1,10 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/derivasur/Desktop/dev/UNA-PAS2/UNA-PAS2--juce-plugins/01-SpectrumAnalyzer/build/JUCE/tools/cmake_install.cmake",
+		"/Users/derivasur/Desktop/dev/UNA-PAS2/UNA-PAS2--juce-plugins/01-SpectrumAnalyzer/build/JUCE/tools/modules/cmake_install.cmake",
+		"/Users/derivasur/Desktop/dev/UNA-PAS2/UNA-PAS2--juce-plugins/01-SpectrumAnalyzer/build/JUCE/tools/extras/Build/cmake_install.cmake",
+		"/Users/derivasur/Desktop/dev/UNA-PAS2/UNA-PAS2--juce-plugins/01-SpectrumAnalyzer/build/JUCE/tools/extras/Build/juceaide/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
