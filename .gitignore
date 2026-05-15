@@ -1,0 +1,37 @@
+# Build directories
+build/
+Build/
+
+# macOS
+.DS_Store
+
+# Compiled binaries (C++ executables without extension)
+modulo-01-cpp-para-dsp/aplicar-gain-1
+modulo-01-cpp-para-dsp/calcular-rms
+modulo-01-cpp-para-dsp/senal
+modulo-02-dft-fft/dft-basica
+modulo-02-dft-fft/dft-real
+modulo-02-dft-fft/fft
+modulo-02-dft-fft/sinusoide-real
+modulo-02-dft-fft/sinusoide-compleja
+modulo-02-dft-fft/sinusoide-compleja-b
+modulo-02-dft-fft/suma-sinusoides
+
+# Generated CSV output files
+*.csv
+
+# Object files and debug info
+*.o
+*.d
+*.o.d
+
+# VST3 plugin artefacts
+*.vst3
+
+# CMake generated
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
