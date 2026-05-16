@@ -1,5 +1,5 @@
 // ============================================================
-// 01-crear-senal.cpp
+// 01-señal_basica.cpp
 // Programación Aplicada al Sonido II — UNA
 // Módulo 1 — Señales digitales y C++ para DSP
 // ============================================================
@@ -13,7 +13,7 @@
 // imprime las primeras muestras en consola y exporta
 // la señal a CSV para visualizarla.
 //
-// Compilar:  g++ -std=c++17 01-crear-senal.cpp -o crear-senal
+// Compilar:  g++ -std=c++17 01-señal_basica.cpp -o crear-senal
 // Ejecutar:  ./crear-senal
 // Graficar:  gnuplot -e "set datafile separator ','; plot 'senal.csv' using 1:2 with lines title 'señal'; pause -1"
 // ============================================================
