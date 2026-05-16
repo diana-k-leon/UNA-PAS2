@@ -1,43 +1,165 @@
-# UNA-PAS2 — Análisis Espectral
+# Setup del entorno
 
-**Programación Aplicada a Sonido II**  
-Especialización en Sonido Aplicado a las Artes Digitales  
-Artes Multimediales · Universidad Nacional de las Artes
+## 🐧 Linux
 
----
+### 1 · Terminal
+Usá la terminal del sistema — viene instalada por defecto en cualquier distribución.
 
-## Sobre la materia
+### 2 · VSCode
+Descargá desde code.visualstudio.com e instalá el paquete `.deb` o `.rpm` según tu distribución.
 
-Programación Aplicada a Sonido II es una materia de la especialización en Sonido Aplicado a las Artes Digitales de la UNA. El enfoque es práctico — los estudiantes implementan en C++ moderno los algoritmos de procesamiento digital de señales de audio cubiertos en la parte teórica, y los integran en plugins VST3 funcionales que corren en DAWs como Ableton y Reaper.
+Extensiones recomendadas:
+- C/C++ (Microsoft)
+- CMake Tools
 
----
-
-## Contenido de este repositorio
-
-Implementaciones en C++ moderno de los algoritmos de análisis espectral cubiertos en la Unidad 1.
-
-### Módulo 1 · C++ para DSP
-Repaso de C++ orientado a procesamiento de señales de audio — señales como vectores, tipos numéricos, loops sobre samples y templates.
-
-### Módulo 2 · DFT y FFT
-Implementación de la Transformada Discreta de Fourier desde cero, incluyendo las variantes básica, real, centrada y con límite de Nyquist. Algoritmo de Cooley-Tukey (FFT Radix-2) y comparación de tiempos contra la DFT ingenua.
-
-### Módulo 3 · Ventanas y STFT
-Funciones de suavizado — Hamming, Hann, Bartlett y Blackman — y análisis espectral por ventana deslizante (Short-Time Fourier Transform).
-
----
-
-## Requisitos
-
-- C++17 o superior
-- CMake 3.22+
-
-## Uso
-
+### 3 · Compilador
 ```bash
-mkdir build && cd build
-cmake ..
-cmake --build .
+# Ubuntu/Debian
+sudo apt install build-essential
+
+# Fedora
+sudo dnf install gcc-c++
+```
+
+### 4 · CMake
+```bash
+# Ubuntu/Debian
+sudo apt install cmake
+
+# Fedora
+sudo dnf install cmake
+
+# verificar
+cmake --version
+```
+
+### 5 · Dependencias JUCE
+```bash
+sudo apt install libasound2-dev libfreetype6-dev libx11-dev \
+  libxrandr-dev libxinerama-dev libxcursor-dev libgl1-mesa-dev
+```
+
+### 6 · JUCE
+```bash
+git clone https://github.com/juce-framework/JUCE.git ~/dev/JUCE
+ls ~/dev/JUCE
+```
+
+### 7 · Estructura de carpetas
+```bash
+mkdir -p ~/dev/UNA-PAS2/TemplatePlugin
+cd ~/dev/UNA-PAS2/TemplatePlugin
 ```
 
 ---
+
+## ⌘ macOS
+
+### 1 · iTerm2
+Reemplazo de la Terminal de Mac con mejores colores, split de paneles y autocompletado.
+
+Descarga: iterm2.com
+
+### 2 · VSCode
+Descargá desde code.visualstudio.com.
+
+Extensiones recomendadas:
+- C/C++ (Microsoft)
+- CMake Tools
+
+### 3 · Xcode Command Line Tools
+```bash
+xcode-select --install
+# si ya están instaladas: "Command line tools are already installed"
+```
+
+### 4 · Homebrew
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# verificar
+brew --version
+```
+
+### 5 · CMake
+```bash
+brew install cmake
+
+# verificar
+cmake --version
+```
+
+### 6 · JUCE
+```bash
+git clone https://github.com/juce-framework/JUCE.git ~/dev/JUCE
+ls ~/dev/JUCE
+```
+
+### 7 · Estructura de carpetas
+```bash
+mkdir -p ~/dev/UNA-PAS2/TemplatePlugin
+cd ~/dev/UNA-PAS2/TemplatePlugin
+```
+
+### 8 · Oh My Zsh (opcional)
+Personaliza el shell con colores, branch de git y prompt con símbolos.
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+---
+
+## ⊞ Windows
+
+### 1 · Windows Terminal
+Descargá desde la Microsoft Store — buscá "Windows Terminal".
+
+### 2 · VSCode
+Descargá desde code.visualstudio.com.
+
+Extensiones recomendadas:
+- C/C++ (Microsoft)
+- CMake Tools
+
+
+### 3 · CMake
+Descargá desde cmake.org/download.
+
+Durante la instalación seleccioná: **"Add CMake to the system PATH"**
+
+```bash
+# verificar en Windows Terminal
+cmake --version
+```
+
+### 4 · JUCE
+```bash
+git clone https://github.com/juce-framework/JUCE.git C:\dev\JUCE
+```
+
+---
+
+## Verificar que todo funciona
+
+Una vez instalado todo, verificá que podés compilar un archivo C++ simple:
+
+```cpp
+// hola.cpp
+#include <iostream>
+int main() {
+    std::cout << "Entorno funcionando" << std::endl;
+    return 0;
+}
+```
+
+```bash
+# Mac / Linux
+g++ -std=c++17 hola.cpp -o hola
+./hola
+
+# Windows
+g++ -std=c++17 hola.cpp -o hola.exe
+hola.exe
+```
+
+Si ves `Entorno funcionando` — estás lista para arrancar.
