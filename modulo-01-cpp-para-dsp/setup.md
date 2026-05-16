@@ -162,4 +162,4 @@ g++ -std=c++17 hola.cpp -o hola.exe
 hola.exe
 ```
 
-Si ves `Entorno funcionando` — estás lista para arrancar.
+Si ves `Entorno funcionando` — está funcionando.
