@@ -3,22 +3,23 @@
 // Programación Aplicada al Sonido II — UNA
 // Unidad 1 - sinusoides
 // ============================================================
-//
 // Genera una onda senoidal y la guarda en un archivo CSV
 // para poder visualizarla en Google Sheets o Excel.
-//
 // Compilar:  g++ -std=c++17  01-sinusoide-real.cpp -o sinusoide-real
 // Ejecutar:  ./sinusoide-real
 // ============================================================
+// x[n] = A · cos(2π · f₀/SR · n + φ)
+// Esta sinusoide real es la señal de entrada que vamos a analizar con la DFT.
 // ----------------------------------------------------------
 // EXPORTAR A CSV
+// El CSV — útil para debugging en JUCE. Cuando no sabés si tu buffer tiene los valores correctos, 
 // ----------------------------------------------------------
 // Exportar a CSV nos permite visualizar la señal en cualquier
 // herramienta externa — Google Sheets, Excel, Python, MATLAB.
 // Es una técnica útil para debugging: cuando trabajés con
 // audio en JUCE, podés exportar buffers y verificar que
 // los valores son los que esperás antes de mandarlos al speaker.
-// Graficar:  gnuplot -e "set datafile separator ','; plot 'sinusoide-real.csv' using 1:2 with lines title 'señal'; pause -1"
+// Graficar:  gnuplot -e "set datafile separator ','; plot 'sinusoide.csv' using 1:2 with lines title 'señal'; pause -1"
 // ----------------------------------------------------------
 
 #include <iostream>

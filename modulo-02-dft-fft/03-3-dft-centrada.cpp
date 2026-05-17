@@ -11,6 +11,15 @@
 // Compilar:  clang++ 03-3-dft-centrada.cpp -o dft-centrado
 // Ejecutar:  ./dft-centrado
 // ============================================================
+/* El resultado de la DFT real muestra los picos en bin 7 y bin 57. Matemáticamente correcto, pero poco intuitivo. 
+   La DFT centrada reescribe los índices para que vayan de -N/2 a N/2 — los picos aparecen en -7 y +7.
+   Es el mismo resultado, solo cambia cómo se presentan.
+*/
+/* Cuando corriste la DFT real obtuviste dos picos — bin 7 y bin 57. 
+   La pregunta es: ¿qué información nueva te da el bin 57? Ninguna. Es exactamente el espejo del bin 7.
+   Nyquist dice: con N muestras solo podés representar frecuencias hasta N/2. 
+   Todo lo que está en la segunda mitad del espectro — bins N/2 a N-1 — es siempre el espejo de la primera mitad. No agrega información.
+*/
 
 #include <iostream>
 #include <vector>

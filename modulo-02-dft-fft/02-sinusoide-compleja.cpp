@@ -7,8 +7,14 @@
 // A diferencia de la sinusoide anterior, esta trabaja en
 // dominio discreto — no hay sample rate ni segundos,
 // solo índices de muestra y bins de frecuencia.
-// Es la base matemática de la DFT.
-//
+// La herramienta matemática que usa la DFT — no suena, mide
+// e^(j·2π·k·n/N) = cos(2π·k·n/N) + j·sin(2π·k·n/N)
+//  La metáfora de la regla
+// La sinusoide compleja es la regla con la que la DFT mide tu señal. 
+// La DFT tiene N de estas reglas — una por cada bin de frecuencia. 
+// Para cada bin pregunta: ¿cuánto se parece mi señal a esta regla? 
+// Si se parecen mucho, el bin tiene valor alto. Si no se parecen, valor casi cero.
+
 // Compilar:  g++ -std=c++17 02-sinusoide-compleja.cpp -o sinusoide-compleja
 // Ejecutar:  ./sinusoide-compleja
 // Graficar:  gnuplot -e "set datafile separator ','; plot 'sinusoide-compleja.csv' using 1:2 with lines title 'real'; pause -1"

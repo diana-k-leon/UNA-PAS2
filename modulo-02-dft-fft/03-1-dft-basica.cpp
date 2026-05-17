@@ -8,11 +8,15 @@
 // frecuencias. Para cada frecuencia genera una sinusoide de
 // referencia y la compara con la señal — si se parecen, ese
 // bin tiene valor alto.
-//
+// X[k] = Σ x[n] · e^(-j·2π·k·n/N)   para k = 0..N-1
+
 // Compilar:  g++ -std=c++17 03-1-dft-basica.cpp -o dft-basica
 // Ejecutar:  ./dft-basica
 // ============================================================
-
+/* La intuición natural es al revés — "tengo la señal, quiero saber qué frecuencias tiene". 
+   Pero el algoritmo lo hace al revés: para cada frecuencia posible, 
+   pregunta "¿cuánto hay de esta frecuencia en la señal?". 
+*/
 #include <iostream>
 #include <vector>
 #include <complex>

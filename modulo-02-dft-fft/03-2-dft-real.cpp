@@ -4,14 +4,22 @@
 // Módulo 2: DFT centrada alrededor de cero
 // ============================================================
 //
-// Igual que dft-real pero los índices van de -N/2 a N/2.
-// Los dos picos aparecen en -7 y +7 — simétricos alrededor de cero.
-// Mismo resultado, más intuitivo.
-//
 // Compilar:  g++ -std=c++17 03-3-dft-centrada.cpp -o dft-centrada
 // Ejecutar:  ./dft-centrada
 // ============================================================
-
+// La diferencia clave respecto a la básica está en la señal de entrada:
+// antes — sinusoide compleja
+// senal[muestra] = std::complex<float>(std::cos(angulo), std::sin(angulo));
+// ahora — coseno, parte imaginaria = 0
+// senal[muestra] = std::complex<float>(std::cos(angulo), 0.0f);
+// Para que hacemos esto > Para conectar con el audio real.
+/* En el ejemplo anterior usamos una sinusoide compleja — que no existe en la naturaleza, es sólo una herramienta matemática. 
+Ningún micrófono te da números complejos. Un micrófono te da floats — valores reales. 
+Un coseno con parte imaginaria = 0 es exactamente eso: una señal real. 
+Es el puente entre el ejemplo de laboratorio y el audio del mundo real. Y la consecuencia 
+importante: con señal real siempre aparecen dos picos — en bin 7 y en bin 57. 
+Eso es lo que van a ver siempre cuando analicen audio de verdad.
+*/
 #include <iostream>
 #include <vector>
 #include <complex>
