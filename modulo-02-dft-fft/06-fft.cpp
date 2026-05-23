@@ -7,7 +7,7 @@
 // Implementa la DFT O(N²) y la FFT O(N·log₂N) sobre la misma
 // señal y compara tiempos. Los resultados deben ser idénticos.
 //
-// Compilar:  g++ -std=c++17 04-fft.cpp -o fft
+// Compilar:  g++ -std=c++17 06-fft.cpp -o fft
 // Ejecutar:  ./fft
 // Graficar:  gnuplot -e "set datafile separator ','; plot 'fft.csv' using 2:3 with lines title 'espectro'; pause -1"
 // ============================================================
