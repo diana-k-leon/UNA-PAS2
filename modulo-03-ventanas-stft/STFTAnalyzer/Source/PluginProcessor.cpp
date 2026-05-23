@@ -27,6 +27,7 @@ STFTAnalyzerAudioProcessor::STFTAnalyzerAudioProcessor()
         .withOutput("Output", juce::AudioChannelSet::stereo(), true))
 {
     buffer_acumulador.resize(fft_size, 0.0f);
+    // buffer de trabajo que le pasás a JUCE para calcular la FFT
     fft_buffer.resize(2 * fft_size, 0.0f);
 
     // Pre-computa ventana Hann: w[n] = 0.5 * (1 - cos(2*pi*n / (N-1)))
@@ -51,6 +52,7 @@ void STFTAnalyzerAudioProcessor::releaseResources() {}
 void STFTAnalyzerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
                                                juce::MidiBuffer& midiMessages)
 {
+    // Leer el audio del DAW
     auto* input = buffer.getReadPointer(0);
     int numSamples = buffer.getNumSamples();
 
@@ -61,13 +63,10 @@ void STFTAnalyzerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         // Cuando tenemos fft_size samples, hacemos FFT
         if (buffer_idx >= fft_size)
         {
-            // Copia acumulador a fft_buffer con ventana Hann
             for (int i = 0; i < fft_size; ++i)
-            {
-                float windowed = buffer_acumulador[i] * window[i];
-                fft_buffer[2 * i] = windowed;
-                fft_buffer[2 * i + 1] = 0.0f;
-            }
+                fft_buffer[i] = buffer_acumulador[i] * window[i];
+            for (int i = fft_size; i < 2 * fft_size; ++i)
+                fft_buffer[i] = 0.0f;
 
             // FFT
             fft.performRealOnlyForwardTransform(fft_buffer.data());
@@ -85,6 +84,16 @@ void STFTAnalyzerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
             if (spectrum_history.size() >= 512)
                 spectrum_history.pop_front();
             spectrum_history.push_back(spectrum);
+
+            /*
+            Acá está la diferencia con el SpectrumAnalyzer.
+            En vez de guardar un solo vector que se sobreescribe, 
+            guardamos una cola de 512 vectores. Si ya hay 512, 
+            sacamos el más viejo (pop_front = sacar del frente). 
+            Agregamos el nuevo al final (push_back). 
+            El Editor lee esta cola y dibuja cada vector como una línea horizontal del
+            espectrograma.
+            */
 
             // Resetea buffer
             buffer_idx = 0;
