@@ -1,36 +1,32 @@
 // ============================================================
 // PluginProcessor.h
 // Programación Aplicada al Sonido II — UNA
-// Unidad 1 · Plugin: STFT Analyzer
+// Unidad 2 · Plugin: Pitch Shift
 // ============================================================
 //
-// FFT con ventana + overlap + espectrograma.
+// Pitch shifting por escalado espectral:
+//
+//   1. FFT del audio de entrada
+//   2. Escala los bins: si shift=+2 semitonos, multiplicador ≈ 1.122
+//   3. IFFT para reconstruir
+//   4. Overlap-add para suavidad
 //
 // Variables:
-//   fft_size         = 1024 (en vez de 2048, más resolución temporal)
-//   hop_size         = 512 (50% overlap)
-//   window           = Hann window
-//   buffer_acumulador = acumula hop_size samples
-//   spectrum_history = historial de espectros para espectrograma
-//   spectrum_idx     = índice en el historial (scrolling)
-//
-// El espectrograma es una matriz:
-//   - Filas: bins de frecuencia (0 a 512)
-//   - Columnas: tiempo (1024 frames históricos)
-//   - Color: magnitud (dB)
+//   pitch_shift_semitones = -12 a +12 semitonos
+//   fft_size = 2048
+//   hop_size = 512
 // ============================================================
 
 #pragma once
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_dsp/juce_dsp.h>
 #include <vector>
-#include <deque>
 
-class STFTAnalyzerAudioProcessor : public juce::AudioProcessor
+class PitchShiftAudioProcessor : public juce::AudioProcessor
 {
 public:
-    STFTAnalyzerAudioProcessor();
-    ~STFTAnalyzerAudioProcessor() override;
+    PitchShiftAudioProcessor();
+    ~PitchShiftAudioProcessor() override;
 
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
@@ -53,24 +49,21 @@ public:
     void getStateInformation(juce::MemoryBlock& destData) override {}
     void setStateInformation(const void* data, int sizeInBytes) override {}
 
-    // El Editor lee esto
-    const std::deque<std::vector<float>>& getSpectrogramHistory() const { return spectrum_history; }
-    int getFFTSize() const { return fft_size; }
+    float getPitchShift() const { return pitch_shift_semitones; }
+    void setPitchShift(float semitones) { pitch_shift_semitones = semitones; }
 
 private:
-    static constexpr int fft_size = 1024;
-    static constexpr int hop_size = 512;  // 50% overlap
+    static constexpr int fft_size = 2048;
+    static constexpr int hop_size = 512;
     
     juce::dsp::FFT fft{static_cast<int>(std::log2(fft_size))};
     
-    std::vector<float> window;              // Ventana Hann
     std::vector<float> buffer_acumulador;
     int buffer_idx = 0;
+    std::vector<float> fft_buffer;
+    std::vector<float> window;
 
-    std::vector<float> fft_buffer;          // Para FFT
-    std::deque<std::vector<float>> spectrum_history;  // Historial (max 1024 frames)
+    float pitch_shift_semitones = 0.0f;
 
-    void applyHannWindow(std::vector<float>& buffer);
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(STFTAnalyzerAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PitchShiftAudioProcessor)
 };

@@ -77,7 +77,7 @@ void STFTAnalyzerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
             {
                 float re = fft_buffer[2 * k];
                 float im = fft_buffer[2 * k + 1];
-                spectrum[k] = std::sqrt(re * re + im * im);
+                spectrum[k] = std::sqrt(re * re + im * i m);
             }
 
             // Agrega al historial — sin lock, simplificado
