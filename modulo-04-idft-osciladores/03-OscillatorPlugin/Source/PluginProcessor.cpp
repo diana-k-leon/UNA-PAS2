@@ -139,3 +139,10 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new OscillatorAudioProcessor();
 }
+/*
+Cambien el oscilador de cálculo directo (sin(phase)) a wavetable. 
+Es decir:
+Agregar una tabla en el .h — std::vector<float> wavetable
+Llenarla en prepareToPlay con un ciclo de sinusoide
+En el processBlock reemplazar sin(phase) por una lectura de la tabla con índice
+*/

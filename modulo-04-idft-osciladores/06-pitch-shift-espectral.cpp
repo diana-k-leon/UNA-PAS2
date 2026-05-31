@@ -12,7 +12,7 @@
 //   5. IFFT
 //   6. Exportar y comparar espectros
 //
-// Compilar:  g++ -std=c++17 01-pitch-shift.cpp ../dsp_utils.cpp -o pitch-shift
+// Compilar:  g++ -std=c++17 06-pitch-shift-espectral.cpp dsp_utils.cpp -o pitch-shift
 // Ejecutar:  ./pitch-shift
 //
 // Graficar espectros:
@@ -23,7 +23,7 @@
 //
 // ============================================================
 
-#include "../dsp_utils.h"
+#include "dsp_utils.h"
 #include <iostream>
 #include <cmath>
 #include <fstream>

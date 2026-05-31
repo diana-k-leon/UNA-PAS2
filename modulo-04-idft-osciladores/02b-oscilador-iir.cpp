@@ -40,45 +40,41 @@ static void write_wav(const std::string& path,
         f.write(reinterpret_cast<char*>(&pcm), 2);
     }
 }
-// Genera 1 segundo de 440 Hz usando el método recursivo.
-// sin() se llama exactamente dos veces — solo para inicializar.
-// El resto del loop no usa ninguna función trigonométrica.
 int main()
 {
     const int   sampleRate = 44100;
-    const float freq       = 440.0f;
-    const int   numSamples = sampleRate;       // 1 segundo
+    const int   numSamples = sampleRate;  // 1 segundo
 
-    const float omega = 2.0f * M_PI * freq / sampleRate;
-    // a es el coeficiente de la recurrencia
-    // el número por el que multiplicás y1 en cada paso
-    const float a     = 2.0f * std::cos(omega); 
+    // tres frecuencias del acorde Do-Mi-Sol
+    const float freqs[3] = { 261.0f, 330.0f, 392.0f };
 
-    // La fórmula necesita dos samples para arrancar.
-    // Le damos los valores que habrían existido antes del sample 0.
-    // Como el loop genera sin(0), sin(ω), sin(2ω)...
-    // el paso anterior es sin(-ω) y dos pasos atrás sin(-2ω).
-    float y1 = std::sin(-omega);               // y[n-1]
-    float y2 = std::sin(-2.0f * omega);        // y[n-2]
+    std::vector<float> buffer(numSamples, 0.0f);
 
-    std::vector<float> buffer(numSamples);
+    for (int i = 0; i < 3; i++)
+    {
+        float omega = 2.0f * M_PI * freqs[i] / sampleRate;
+        float a     = 2.0f * std::cos(omega);
+        float y1    = std::sin(-omega);
+        float y2    = std::sin(-2.0f * omega);
 
-    for (int n = 0; n < numSamples; n++) {
-        // identidad trigonométrica: sin(nω) = 2cos(ω)·sin((n-1)ω) - sin((n-2)ω)
-        float y = a * y1 - y2;              
-        buffer[n] = y;
-        y2 = y1; // correr ventana: y[n-2] ← y[n-1]
-        y1 = y; // correr ventana: y[n-1] ← y[n]
+        for (int n = 0; n < numSamples; n++)
+        {
+            float y  = a * y1 - y2;
+            // (y1/3) + (y2/3) + (y3/3) = (y1 + y2 + y3) / 3
+            // buffer[n] += y / 3.0f;
+            buffer[n] += y; 
+            y2 = y1;
+            y1 = y;
+        }
     }
+    for (int n = 0; n < numSamples; n++)
+        buffer[n] /= 3.0f;
     
-    // Exporta el buffer como WAV para escuchar el resultado.
     write_wav("02-oscilador-iir.wav", buffer, sampleRate);
-
     return 0;
 }
 /*
-Generen un acorde — 
-tres frecuencias sumadas (por ejemplo Do-Mi-Sol: 261, 330, 392 Hz). 
-Cada una con su propio oscilador IIR y suman los tres buffers. 
-Escuchan el WAV y verifican que suena como acorde.
- */
+En la práctica las tres ondas no llegan a su máximo al mismo tiempo — Do, Mi y Sol están desfasadas. Entonces el máximo real de la suma es menor que 3. Pero en el peor caso teórico sí podría llegar a 3, por eso dividís preventivamente.
+El clipping es cuando la onda "choca" contra el límite del rango y se aplana — en vez de una curva suave se ve una línea recta en los picos. Eso genera armónicos no deseados y suena distorsionado, como un amplificador saturado.
+En audio profesional esto se evita con normalización — escalar la señal entera al máximo posible sin clipear. Dividir por 3 es una versión simplificada de eso.
+*/

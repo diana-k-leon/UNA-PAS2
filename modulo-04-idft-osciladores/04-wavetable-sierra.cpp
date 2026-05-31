@@ -9,7 +9,7 @@
 //   2. Diente de sierra (todos los armónicos)
 // Calcular FFT de ambas y comparar espectros.
 //
-// Compilar:  g++ -std=c++17 03-wavetable-sierra.cpp ../dsp_utils.cpp -o wavetable-sierra
+// Compilar:  g++ -std=c++17 04-wavetable-sierra.cpp dsp_utils.cpp -o wavetable-sierra
 // Ejecutar:  ./wavetable-sierra
 //
 // Graficar señales:
@@ -20,7 +20,7 @@
 //
 // ============================================================
 
-#include "../dsp_utils.h"
+#include "dsp_utils.h"
 #include <iostream>
 #include <cmath>
 #include <fstream>

@@ -17,7 +17,7 @@
 //   Diezmar ÷3   → señal se acorta más, pitch sube
 //   Neto: pitch × (3/2) = quinta arriba, duración × (2/3)
 //
-// Compilar:  g++ -std=c++17 05-pshift-con-cambio.cpp ../dsp_utils.cpp -o pshift-con-cambio
+// Compilar:  g++ -std=c++17 05-pshift-con-cambio.cpp dsp_utils.cpp -o pshift-con-cambio
 // Ejecutar:  ./pshift-con-cambio
 //
 // Graficar espectros:
@@ -25,7 +25,7 @@
 //
 // ============================================================
 
-#include "../dsp_utils.h"
+#include "dsp_utils.h"
 #include <iostream>
 #include <cmath>
 #include <fstream>
