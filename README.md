@@ -41,9 +41,3 @@ cmake --build .
 ```
 
 ---
-
-## Cursada
-
-**Profesoras:** Diana León · Sol Pereyra  
-**Carrera:** Artes Multimediales · UNA  
-**Año:** 2026
