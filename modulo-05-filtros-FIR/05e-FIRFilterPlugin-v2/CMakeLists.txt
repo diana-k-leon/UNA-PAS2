@@ -1,51 +1,47 @@
 # ============================================================
 # CMakeLists.txt
 # Programación Aplicada al Sonido II — UNA
-# Unidad 3 · Plugin: Biquad EQ
+# Unidad 3 · Plugin: FIR Filter v2 (orden variable)
 # ============================================================
 #
 # Compilar:
-#   cd ~/UNA-PAS2--juce-plugins/06-BiquadEQPlugin
-#   mkdir -p build && cd build && cmake .. && make 
-#   cmake .. && make
-#
-# Copiar a VST3:
-#   cp -r ~/Desktop/dev/UNA-PAS2/UNA-PAS2--juce-plugins/06-BiquadEQPlugin/build/BiquadEQPlugin_artefacts/VST3/* ~/Library/Audio/Plug-Ins/VST3/
+#   cd ~/UNA-PAS2--juce-plugins/05e-FIRFilterPlugin-v2
+#   mkdir -p build && cd build && cmake .. && make
 #
 # ============================================================
 
 cmake_minimum_required(VERSION 3.22)
-project(BiquadEQPlugin VERSION 0.1)
+project(FIRFilterPluginV2 VERSION 0.1)
 
 add_subdirectory(/Users/derivasur/Desktop/dev/JUCE ./JUCE)
 
-juce_add_plugin(BiquadEQPlugin
+juce_add_plugin(FIRFilterPluginV2
     FORMATS VST3
-    PLUGIN_NAME "Biquad EQ"
+    PLUGIN_NAME "FIR Filter v2"
     PLUGIN_MANUFACTURER_CODE Mfr1
-    PLUGIN_CODE Biq1
+    PLUGIN_CODE Fir2
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT FALSE
     NEEDS_MIDI_OUTPUT FALSE
     VST3_CATEGORIES "Fx"
     IS_MIDI_EFFECT FALSE
-    COPY_PLUGIN_AFTER_BUILD FALSE
+    COPY_PLUGIN_AFTER_BUILD TRUE
     VST3_CAN_REPLACE_VST2 FALSE
 )
 
-juce_generate_juce_header(BiquadEQPlugin)
+juce_generate_juce_header(FIRFilterPluginV2)
 
-target_sources(BiquadEQPlugin PRIVATE
+target_sources(FIRFilterPluginV2 PRIVATE
     Source/PluginProcessor.cpp
     Source/PluginEditor.cpp
 )
 
-target_link_libraries(BiquadEQPlugin PRIVATE
+target_link_libraries(FIRFilterPluginV2 PRIVATE
     juce::juce_audio_processors
     juce::juce_audio_utils
     juce::juce_dsp
 )
 
-target_compile_definitions(BiquadEQPlugin PUBLIC
+target_compile_definitions(FIRFilterPluginV2 PUBLIC
     JUCE_IGNORE_VST3_MISMATCHED_PARAMETER_ID_WARNING=1
 )

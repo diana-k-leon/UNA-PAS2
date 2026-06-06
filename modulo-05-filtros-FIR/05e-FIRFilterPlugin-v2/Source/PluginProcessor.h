@@ -1,29 +1,26 @@
 // ============================================================
 // PluginProcessor.h
 // Programación Aplicada al Sonido II — UNA
-// Unidad 3 · Plugin: Crossover FIR
+// Unidad 3 · Plugin: FIR Filter v2 (orden variable)
 // ============================================================
 //
-// Crossover: divide la señal en dos bandas usando JUCE dsp::IIR
+// Filtro FIR con dos parámetros controlables:
+//   cutoff_freq  = frecuencia de corte (Hz)
+//   fir_order    = orden del filtro (4 a 256)
 //
-//   señal → pasa-bajos → canal izquierdo  (graves)
-//   señal → pasa-altos → canal derecho    (agudos)
-//
-// Variables:
-//   crossover_freq  = frecuencia de cruce (Hz)
-//   lpf             = filtro pasa-bajos (Linkwitz-Riley 4to orden)
-//   hpf             = filtro pasa-altos (Linkwitz-Riley 4to orden)
+// Kernel: sinc(n) * ventana Hamming
+// Buffer circular para tiempo real
 // ============================================================
 
 #pragma once
 #include <juce_audio_processors/juce_audio_processors.h>
-#include <juce_dsp/juce_dsp.h>
+#include <vector>
 
-class CrossoverAudioProcessor : public juce::AudioProcessor
+class FIRFilterV2AudioProcessor : public juce::AudioProcessor
 {
 public:
-    CrossoverAudioProcessor();
-    ~CrossoverAudioProcessor() override;
+    FIRFilterV2AudioProcessor();
+    ~FIRFilterV2AudioProcessor() override;
 
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
@@ -46,26 +43,23 @@ public:
     void getStateInformation(juce::MemoryBlock&) override {}
     void setStateInformation(const void*, int) override {}
 
-    float getCrossoverFreq() const { return crossover_freq; }
-    void setCrossoverFreq(float freq);
+    float getCutoffFreq() const { return cutoff_freq; }
+    int   getFIROrder()   const { return fir_order; }
+
+    void setCutoffFreq(float freq);
+    void setFIROrder(int order);
 
 private:
-    float crossover_freq = 2000.0f;
+    float  cutoff_freq = 5000.0f;
+    int    fir_order   = 64;
     double sample_rate = 48000.0;
 
-    // Dos filtros IIR de segundo orden en cascada = Linkwitz-Riley 4to orden
-    using Filter = juce::dsp::IIR::Filter<float>;
-    using Coefficients = juce::dsp::IIR::Coefficients<float>;
+    std::vector<float> fir_kernel;
+    std::vector<float> fir_buffer;
+    int fir_idx = 0;
 
-    // Pasa-bajos: dos biquad en serie
-    Filter lpf1, lpf2;
+    void computeKernel();
+    void resizeBuffers();
 
-    // Pasa-altos: dos biquad en serie
-    Filter hpf1, hpf2;
-
-    void updateFilters();
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CrossoverAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FIRFilterV2AudioProcessor)
 };
-
-

@@ -51,14 +51,17 @@ public:
     void setCutoffFreq(float freq);
 
 private:
+    // el orden del filtro (M)
+    // static constexpr > no cambia nunca en tiempo de ejecución.
     static constexpr int fir_order = 128;
     
+    //se controla con el slider
     float cutoff_freq = 5000.0f;
     double sample_rate = 48000.0;
     
-    std::vector<float> fir_kernel;
-    std::vector<float> fir_buffer;
-    int fir_idx = 0;
+    std::vector<float> fir_kernel; // h[k] 
+    std::vector<float> fir_buffer; // historial
+    int fir_idx = 0; // índice del buffer circular
 
     void computeKernel();
 
