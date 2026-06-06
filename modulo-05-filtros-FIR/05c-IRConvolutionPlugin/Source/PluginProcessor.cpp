@@ -36,7 +36,17 @@ void IRConvolutionAudioProcessor::releaseResources()
 {
     convolution.reset();
 }
-// Cuándo se llama a loadIR?
+/* 
+No hay que "sacar" los coeficientes — el archivo de audio ya los contiene. 
+Cuando hacés loadImpulseResponse(file), JUCE lee las muestras del WAV y las usa como coeficientes. 
+Nada más.
+Lo que sí existe en producción profesional es un proceso más sofisticado usando un sweep sinusoidal 
+— en vez de un globo mandás un sine sweep que recorre todas las frecuencias, grabás la respuesta, 
+y después deconvolucionás para obtener una IR más limpia y precisa. 
+Pero para el uso básico del plugin, 
+cualquier grabación de un sonido impulsivo en el espacio ya funciona como IR.
+
+*/
 void IRConvolutionAudioProcessor::loadIR(const juce::File& file)
 {
     // Cargar IR desde archivo WAV
