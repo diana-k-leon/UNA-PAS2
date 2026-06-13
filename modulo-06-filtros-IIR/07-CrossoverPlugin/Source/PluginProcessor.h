@@ -58,11 +58,14 @@ private:
     using Coefficients = juce::dsp::IIR::Coefficients<float>;
 
     // Pasa-bajos: dos biquad en serie
-    Filter lpf1, lpf2;
+    Filter lpf1, lpf2; // JUCE maneja coeficientes + historia + proceso
 
     // Pasa-altos: dos biquad en serie
     Filter hpf1, hpf2;
-
+    /* 
+    juce::dsp::IIR::Filter que es el objeto filtro completo de JUCE — 
+    ya incluye la historia (x1, x2, y1, y2) internamente y 
+    tiene su propio process().*/
     void updateFilters();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CrossoverAudioProcessor)
